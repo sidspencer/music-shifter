@@ -1,0 +1,12 @@
+{
+  // Required
+  "app": {
+    "background": {
+      // Optional
+      "scripts": ["background.js"]
+    }
+  },
+  "manifest_version": 2,
+  "name": "MusicShifter",
+  "version": "0.0.1"
+}
