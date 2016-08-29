@@ -1,6 +1,6 @@
 <div id="settingsHolder">
-    <setting [descriptor]="playbackRate"></setting>
-    <setting [descriptor]="bassLevel"></setting>
-    <setting [descriptor]="midLevel"></setting>
-    <setting [descriptor]="trebleLevel"></setting>
+    <setting [descriptor]="playbackRate" [settingValue]="settingService.currentEq.settings.playbackRate"></setting>
+    <setting [descriptor]="bassLevel" [settingValue]="settingService.currentEq.settings.bassLevel">></setting>
+    <setting [descriptor]="midLevel" [settingValue]="settingService.currentEq.settings.midLevel">></setting>
+    <setting [descriptor]="trebleLevel" [settingValue]="settingService.currentEq.settings.trebleLevel">></setting>
 </div>

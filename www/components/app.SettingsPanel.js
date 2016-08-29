@@ -5,33 +5,39 @@
       templateUrl: 'components/app.SettingsPanel.html',
       directives: [
         app.SettingComponent
+      ],
+      providers: [
+        app.SettingService
       ]
     })
     .Class({
-      constructor: function() {
+      constructor: [app.SettingService, function(settingService) {
+        this.settingService = settingService;
+        
         this.playbackRate = {
           'id': "playbackRate",
-          'text': "Playback Rate: ",
+          'label': "Playback Rate: ",
           'value': "1.7"
         };
 
         this.bassLevel = {
           'id': "bassLevel",
-          'text': "Bass Level: ",
+          'label': "Bass Level: ",
           'value': "20"
         };
 
         this.midLevel = {
           'id': "midLevel",
-          'text': "Mid Level: ",
+          'label': "Mid Level: ",
           'value': "0"
         };
 
         this.trebleLevel = {
           'id': "trebleLevel",
-          'text': "Treble Level: ",
+          'label': "Treble Level: ",
           'value': "-10"
         };
       }
-    });
+    ]
+  });
 })(window.app || (window.app = {}));

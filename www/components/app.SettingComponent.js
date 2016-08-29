@@ -4,7 +4,8 @@
       selector: 'setting',
       templateUrl: 'components/app.SettingComponent.html',
       inputs: [
-        'descriptor'
+        'descriptor',
+        'settingValue'
       ]
     })
     .Class({

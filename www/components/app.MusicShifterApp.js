@@ -5,16 +5,20 @@
       templateUrl: 'components/app.MusicShifterApp.html',
       directives: [
         app.SettingsPanelComponent
+      ],
+      providers: [
+        app.SettingService
       ]
     })
     .Class({
-      constructor: function() {
+      constructor: [app.SettingService, function(settingService) {
         this.file = null;
         this.bufferSource = null;
         this.recorder = null;
         this.isPlaying = false;
         this.mp3BlobUrl = "";
-      },
+        this.settingService = settingService;
+      }],
       ngOnInit: function() {
       },
       import: function(evt) {
@@ -51,9 +55,6 @@
         reader.onload = function(ev) {
             audioContext.decodeAudioData(ev.target.result, function(buffer) {
                 me.bufferSource.buffer = buffer;
-
-                // This is the nightcoring.
-                //_bufferSource.playbackRate.value = $("#playbackRate").val();
                     
                 // Automatically stop at the end of the track.
                 me.bufferSource.onended = function stopPlayingAndRecording(evt) {
@@ -61,7 +62,7 @@
                 };
 
                 // Attach EQ filters
-                //attachEqFilters();
+                me.settingService.attachEqFilters(me.bufferSource);
 
                 // Finally start playing/recording.
                 me.bufferSource.start(0);
