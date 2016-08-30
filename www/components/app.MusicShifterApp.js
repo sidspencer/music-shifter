@@ -7,17 +7,19 @@
         app.SettingsPanelComponent
       ],
       providers: [
-        app.SettingService
+        app.SettingService,
+        ng.platformBrowser.DomSanitizationService
       ]
     })
     .Class({
-      constructor: [app.SettingService, function(settingService) {
+      constructor: [app.SettingService, ng.platformBrowser.DomSanitizationService, function(settingService, sce) {
         this.file = null;
         this.bufferSource = null;
         this.recorder = null;
         this.isPlaying = false;
         this.mp3BlobUrl = "";
         this.settingService = settingService;
+        this.sce = sce
       }],
       ngOnInit: function() {
       },
@@ -58,7 +60,9 @@
                     
                 // Automatically stop at the end of the track.
                 me.bufferSource.onended = function stopPlayingAndRecording(evt) {
+                  if (this.isPlaying) {
                     me.stop();
+                  }
                 };
 
                 // Attach EQ filters
@@ -85,10 +89,10 @@
 
         this.recorder.exportWAV(
             function setDownloadUrl(blob) {
-                me.mp3BlobUrl =  URL.createObjectURL(blob);
+                me.mp3BlobUrl =  ng.platformBrowser.DomSanitizationService.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
             },
             "audio/mp3"
         );
-      } 
+      }
     });
 })(window.app || (window.app = {}));

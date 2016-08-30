@@ -2,11 +2,6 @@
             <p id="blurb">Please select the track, then hit Play.</p>
 
             <div><input id="audioFile" type="file" (change)="import($event)" /></div>
-            
-            <div id="bassSlider" class="slider">
-                <div class="slider_bar"></div>
-                <span class="slider_tab" draggable="true"></span>
-            </div>
 
             <settings-panel></settings-panel>
         
@@ -14,6 +9,6 @@
             <button id="stop" (click)="stop($event)">Stop</button>
 
             <div id="exportHolder">
-                <a id="export" [attr.href]="mp3BlobUrl" download="musicShifter_output.mp3">Export</a>
+                <a id="export" [href]="mp3BlobUrl" download="musicShifter_output.mp3">[Export]</a>
             <div>
         </div>
