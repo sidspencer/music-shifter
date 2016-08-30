@@ -1,6 +1,9 @@
 (function(app) {
   app.SettingService = function SettingService() {  };
 
+  /* - CONFIG - */
+  var PHP_WS = "http://localhost1234/php/SWSettings.php";
+
   // The full list of EQ objects returned from the server. basically just set by refreshFromServer()
   var _savedEqs = [];
   
@@ -50,34 +53,16 @@
   
   Object.defineProperty(app.SettingService.prototype, "refreshFromServer", {
     value: function refreshFromServer(http) {
-      // Do http get. Put the EQ settings into the array.
-
-      _savedEqs = [
-        {
-          id: 1,
-          name: "Setting A",
-          settings: {
-            'playbackRate': 1,
-            'trebleLevel': 2,
-            'midLevel': 3,
-            'bassLevel': 4
-          }
+      // Do http get. Put the EQ settings into the array
+      http.get(PHP_WS).subscribe(
+        function incremental() {},
+        function failure() {
+          console.log("Failed to get settings")
         },
-        {
-          id: 2,
-          name: "Setting B",
-          settings: {
-            'playbackRate': 1,
-            'trebleLevel': 2,
-            'midLevel': 3,
-            'bassLevel': 4
-          }
+        function completion(response) {
+          _savedEqs = JSON.parse(response.body);
         }
-      ];
-
-      http.get("http://localhost:3000/main.css").subscribe(function(response) {
-        console.log(JSON.stringify(response));
-      });
+      );
     },
     enumerable: true,
     configurable: false
@@ -129,8 +114,18 @@
   });
 
   Object.defineProperty(app.SettingService.prototype, "saveCurrentEq", {
-    value: function saveCurrentEq() {
+    value: function saveCurrentEq(http) {
       // Do http post of current Eq.
+      http.post(PHP_WS, JSON.parse(_currentEq)).subscribe(
+        function incremental() {},
+        function failure() {
+          console.log("Failed to create new EQ");
+        },
+        function complete(response) {
+          console.log("Created new EQ");
+          console.log(JSON.stringify(response));
+        }
+      );
 
       // push into list.
       _savedEqs.push(_currentEq);
