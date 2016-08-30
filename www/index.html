@@ -3,6 +3,7 @@
 	<head>
 		<title>MusicShifter</title>
         
+        <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-eval' 'unsafe-inline' blob: http: *" />
         <script src="lib/Recorderjs-master/recorder.js"></script>        
         
         <link rel="stylesheet" href="main.css" />
@@ -17,7 +18,7 @@
         <script src="node_modules/@angular/platform-browser/bundles/platform-browser.umd.js"></script>
         <script src="node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"></script>
         <script src="node_modules/@angular/http/bundles/http.umd.js"></script>
-        
+
         <script src="services/app.SettingService.js"></script>
         <script src="components/app.SettingComponent.js"></script>
         <script src="components/app.SettingsPanel.js"></script>
