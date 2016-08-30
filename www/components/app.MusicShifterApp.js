@@ -8,19 +8,24 @@
       ],
       providers: [
         app.SettingService,
-        ng.platformBrowser.DomSanitizationService,
-        ng.http.HTTP_PROVIDERS
+        ng.platformBrowser.BROWSER_SANITIZATION_PROVIDERS,
+        ng.http.HTTP_PROVIDERS,
+        ng.core.APPLICATION_COMMON_PROVIDERS
       ]
     })
     .Class({
-      constructor: [app.SettingService, ng.platformBrowser.DomSanitizationService, ng.http.Http, function(settingService, sce, ngHttp) {
+      constructor: [app.SettingService, ng.platformBrowser.DomSanitizationService, ng.http.Http, ng.core.ApplicationRef, function(settingService, sce, ngHttp, lifeCycle) {
         this.file = null;
         this.bufferSource = null;
         this.recorder = null;
         this.isPlaying = false;
-        this.mp3BlobUrl = "";
+        this.mp3Blob = {
+          url: ""
+        };
         this.settingService = settingService;
-        this.sce = sce
+        this.sce = sce;
+        this.http = ngHttp;
+        this.lifeCycle = lifeCycle;
       }],
       ngOnInit: function() {
       },
@@ -90,7 +95,10 @@
 
         this.recorder.exportWAV(
             function setDownloadUrl(blob) {
-                me.mp3BlobUrl =  ng.platformBrowser.DomSanitizationService.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+                me.mp3Blob['url'] =  (function () { 
+                  return me.sce.bypassSecurityTrustUrl(URL.createObjectURL(blob));
+                })();
+                me.lifeCycle.tick();
             },
             "audio/mp3"
         );
