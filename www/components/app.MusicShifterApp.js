@@ -8,11 +8,12 @@
       ],
       providers: [
         app.SettingService,
-        ng.platformBrowser.DomSanitizationService
+        ng.platformBrowser.DomSanitizationService,
+        ng.http.HTTP_PROVIDERS
       ]
     })
     .Class({
-      constructor: [app.SettingService, ng.platformBrowser.DomSanitizationService, function(settingService, sce) {
+      constructor: [app.SettingService, ng.platformBrowser.DomSanitizationService, ng.http.Http, function(settingService, sce, ngHttp) {
         this.file = null;
         this.bufferSource = null;
         this.recorder = null;
