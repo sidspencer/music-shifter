@@ -1,5 +1,5 @@
 (function(app) {
-  app.SettingService = function SettingService() {}
+  app.SettingService = function SettingService() {  };
 
   // The full list of EQ objects returned from the server. basically just set by refreshFromServer()
   var _savedEqs = [];
@@ -49,7 +49,7 @@
   });
   
   Object.defineProperty(app.SettingService.prototype, "refreshFromServer", {
-    value: function refreshFromServer() {
+    value: function refreshFromServer(http) {
       // Do http get. Put the EQ settings into the array.
 
       _savedEqs = [
@@ -75,6 +75,9 @@
         }
       ];
 
+      http.get("http://localhost:3000/main.css").subscribe(function(response) {
+        console.log(JSON.stringify(response));
+      });
     },
     enumerable: true,
     configurable: false

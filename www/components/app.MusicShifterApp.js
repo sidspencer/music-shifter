@@ -14,7 +14,7 @@
       ]
     })
     .Class({
-      constructor: [app.SettingService, ng.platformBrowser.DomSanitizationService, ng.http.Http, ng.core.ApplicationRef, function(settingService, sce, ngHttp, lifeCycle) {
+      constructor: [app.SettingService, ng.platformBrowser.DomSanitizationService, ng.http.Http, ng.core.ApplicationRef, function(settingService, sce, http, appRef) {
         this.file = null;
         this.bufferSource = null;
         this.recorder = null;
@@ -23,9 +23,9 @@
           url: ""
         };
         this.settingService = settingService;
+        this.http = http;
         this.sce = sce;
-        this.http = ngHttp;
-        this.lifeCycle = lifeCycle;
+        this.appRef = appRef;
       }],
       ngOnInit: function() {
       },
@@ -79,6 +79,7 @@
                 me.recorder.record();
                 
                 me.isPlaying = true;
+                me.appRef.tick();
             });
         };
         
@@ -98,10 +99,13 @@
                 me.mp3Blob['url'] =  (function () { 
                   return me.sce.bypassSecurityTrustUrl(URL.createObjectURL(blob));
                 })();
-                me.lifeCycle.tick();
+                me.appRef.tick();
             },
             "audio/mp3"
         );
+      },
+      refresh: function refresh(evt) {
+        this.settingService.refreshFromServer(this.http);
       }
     });
 })(window.app || (window.app = {}));

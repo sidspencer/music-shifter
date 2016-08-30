@@ -1,4 +1,6 @@
         <div id="content">
+            <button id="refreshFromServer" (click)="refresh($event)">Refresh</button>
+
             <p id="blurb">Please select the track, then hit Play.</p>
 
             <div><input id="audioFile" type="file" (change)="import($event)" /></div>
@@ -6,9 +8,9 @@
             <settings-panel></settings-panel>
         
             <button id="play" (click)="play($event)" [disabled]="isPlaying">Play</button>
-            <button id="stop" (click)="stop($event)">Stop</button>
+            <button id="stop" (click)="stop($event)" [disabled]="!isPlaying">Stop</button>
 
             <div id="exportHolder">
-                <a id="export" [href]="mp3Blob.url" download="musicShifter_output.mp3">[Export]</a>
+                <a id="export" [href]="!isPlaying ? mp3Blob.url : ''" download="musicShifter_output.mp3">[Export]</a>
             <div>
         </div>
