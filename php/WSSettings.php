@@ -4,34 +4,15 @@ $conn = mysql_connect("localhost", "root", "");
 mysql_select_db('MusicShifter', $conn);
 
 if ($_SERVER['REQUEST_METHOD'] == "POST"){
-    // Get EQ data from the POST
-    $name = isset($_POST['name']) ? 
-        mysql_real_escape_string($_POST['name']) : 
-        null;
-
-    $playbackRate = isset($_POST['playbackRate']) ? 
-        mysql_real_escape_string($_POST['playbackRate']) : 
-        null;
-
-    $trebleLevel = isset($_POST['trebleLevel']) ? 
-        mysql_real_escape_string($_POST['trebleLevel']) : 
-        null;
-    
-    $midLevel = isset($_POST['midLevel']) ? 
-        mysql_real_escape_string($_POST['midLevel']) : 
-        null;
-
-    $bassLevel = isset($_POST['bassLevel']) ? 
-        mysql_real_escape_string($_POST['bassLevel']) : 
-        null;
+    $eq = json_decode($HTTP_RAW_POST_DATA);
 
     // Insert new EQ if we were passed all the settings.
-    if (is_null($name) || $is_null($playbackRate) || is_null($trebleLevel) || is_null($midLevel) || is_null($bassLevel)) {
+    if (is_null($eq->name) || is_null($eq->playbackRate) || is_null($eq->$trebleLevel) || is_null($eq->midLevel) || is_null($eq->bassLevel)) {
         $result = false;
     }
     else {
         $sql = "INSERT INTO MusicShifter.EQ(name, playbackRate, trebleLevel, midLevel, bassLevel)" +
-            "VALUES ('$name', $playbackRate, $trebleLevel, $midLevel, $bassLevel);";
+            "VALUES ('$eq->name', $eq->playbackRate, $eq->trebleLevel, $eq->midLevel, $eq->bassLevel);";
         $result = mysql_query($sql);
     }
 
