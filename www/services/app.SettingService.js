@@ -2,7 +2,7 @@
   app.SettingService = function SettingService() {  };
 
   /* - CONFIG - */
-  var PHP_WS = "http://localhost1234/php/SWSettings.php";
+  var WS_URL = "http://localhost:3003/eq/";
 
   // The full list of EQ objects returned from the server. basically just set by refreshFromServer()
   var _savedEqs = [];
@@ -53,14 +53,18 @@
   
   Object.defineProperty(app.SettingService.prototype, "refreshFromServer", {
     value: function refreshFromServer(http) {
+      var httpData = "";
+
       // Do http get. Put the EQ settings into the array
-      http.get(PHP_WS).subscribe(
-        function incremental() {},
+      http.get(WS_URL).subscribe(
+        function success(response) {
+          _savedEqs = response.json();
+        },
         function failure() {
           console.log("Failed to get settings")
         },
         function completion(response) {
-          _savedEqs = JSON.parse(response.body);
+          console.log("Got settings");
         }
       );
     },
