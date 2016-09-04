@@ -1,6 +1,10 @@
 <div id="settingsHolder">
+    <select id="eqList" ([ngModel])="selectedEq" (change)="selectEq($event)">
+        <option *ngFor="let eq of settingService.savedEqs" ([ngValue])="eq">{{ eq.name }}</option>
+    </select>
+
     <setting [descriptor]="playbackRate" [settingValue]="settingService.currentEq.settings.playbackRate"></setting>
-    <setting [descriptor]="bassLevel" [settingValue]="settingService.currentEq.settings.bassLevel">></setting>
-    <setting [descriptor]="midLevel" [settingValue]="settingService.currentEq.settings.midLevel">></setting>
-    <setting [descriptor]="trebleLevel" [settingValue]="settingService.currentEq.settings.trebleLevel">></setting>
+    <setting [descriptor]="bassLevel" [settingValue]="settingService.currentEq.settings.bassLevel"></setting>
+    <setting [descriptor]="midLevel" [settingValue]="settingService.currentEq.settings.midLevel"></setting>
+    <setting [descriptor]="trebleLevel" [settingValue]="settingService.currentEq.settings.trebleLevel"></setting>
 </div>

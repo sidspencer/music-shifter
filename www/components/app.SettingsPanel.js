@@ -13,6 +13,8 @@
     .Class({
       constructor: [app.SettingService, function(settingService) {
         this.settingService = settingService;
+
+        this.selectedEq = this.settingService.currentEq;
         
         this.playbackRate = {
           'id': "playbackRate",
@@ -38,6 +40,9 @@
           'value': "-10"
         };
       }
-    ]
+    ],
+    selectEq: function selectEq(evt) {
+      this.settingService.currentEq = this.selectedEq;
+    }
   });
 })(window.app || (window.app = {}));
