@@ -81,7 +81,7 @@ var utils = {
       },
       writeErrorStatusWithMessage: function writeErrorStatusWithMessage(response, message) {
             this.writeHeadWithStatus(response, 500);
-            response.end(JSON.parse({
+            response.end(JSON.stringify({
                   error: message
             }))
       }
@@ -89,11 +89,11 @@ var utils = {
 
 // Create Server
 var server = http.createServer(function (request, response) {
-      if (!request.url.match("/:" + port + "\/eqs\//")) {
+      if (!request.url.match(/^\/eqs\//)) {
             utils.writeErrorStatusWithMessage(response, "No such service.");
       }
 
-      if (request.url.match(/eqs\/eq)/)) {
+      if (request.url.match(/^\/eqs\/eq/)) {
             if (request.method == "PUT") {
                   try {
                         var selectedEq = JSON.parse(response.body);
