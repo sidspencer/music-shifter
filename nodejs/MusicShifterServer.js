@@ -4,7 +4,14 @@ var http = require('http');
 var hostname = '127.0.0.1';
 var port = 3003;
 
-var mockEq = { "id": 1, "name": "mockEq", "playbackRate": 3, "trebleLevel": 3, "midLevel": 3, "bassLevel": 3 };
+var mockEq = { 
+      "id": 1, 
+      "name": "mockEq", 
+      "playbackRate": 3, 
+      "trebleLevel": 3, 
+      "midLevel": 3, 
+      "bassLevel": 3 
+};
 
 
 // Service
